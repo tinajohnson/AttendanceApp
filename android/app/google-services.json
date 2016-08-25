@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "907512611063",
+    "firebase_url": "https://reportbee-cf27a.firebaseio.com",
+    "project_id": "reportbee-cf27a",
+    "storage_bucket": "reportbee-cf27a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907512611063:android:3de4bc5bd70d8630",
+        "android_client_info": {
+          "package_name": "com.reportbee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907512611063-9llg0m38olc4vig62s339t8kennn61np.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB87L5QWRy4STgSDUkcNAWzOHbaCv7glGI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
