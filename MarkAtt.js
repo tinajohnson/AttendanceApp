@@ -28,27 +28,11 @@ class MarkAtt extends Component{
           }
     }
 
-    getStudentList() {
-        fetch('https://reportbee-cf27a.firebaseio.com/students.json')
-          .then(
-              function(response){
-              response.json().then(function(data) {
-                return data;
-              });
-          })
-
-          .catch((error) => {
-            console.error(error);
-          });
-    }
-
-
     componentDidMount() {
         fetch('https://reportbee-cf27a.firebaseio.com/students.json')
               .then(
                   function(response){
                   response.json().then(function(data) {
-                    console.log(data);
                     this.setState({
                          dataSource: ds.cloneWithRows(data)
                     })

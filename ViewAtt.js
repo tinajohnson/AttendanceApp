@@ -45,7 +45,7 @@ class ViewAtt extends Component{
             })
         } else {
             const regex = new RegExp(`${query.trim()}`, 'i');
-            const filtered = this.state.students.filter(data => (data.name.search(regex) >= 0));
+            const filtered = this.state.students.filter(data => (data.name.search(regex) >= 0) || (data.id.search(regex) >= 0));
             this.setState({
                 data:filtered
             });
@@ -53,6 +53,8 @@ class ViewAtt extends Component{
     }
 
     renderSummary(item) {
+        let present, absent, unAbsent, inAbsent;
+
         return(
             <View>
                 <Text>Student name: {item.name}</Text>
