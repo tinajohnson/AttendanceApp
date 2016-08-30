@@ -22,7 +22,7 @@ class StudentRow extends Component{
 
     onPickerChange(att, name, id) {
         this.setState({attendance:att})
-        if (date != '') {
+        if (date != '' && att != 'null') {
             var obj = {};
             var newEntry;
             var date=this.props.date;
@@ -74,7 +74,8 @@ class StudentRow extends Component{
                       <Text style={{fontSize:22}}>{this.state.student.name}</Text>
                           <Picker
                               selectedValue= {this.state.attendance}
-                              onValueChange= {(e) => this.onPickerChange(e, this.state.student.name, this.state.student.id)}>
+                              onValueChange= {(e) => this.onPickerChange(e, this.state.student.name, this.state.student.id)} prompt="Select">
+                              <Picker.Item label="Select" value="null" />
                               <Picker.Item label="Present" value="present" />
                               <Picker.Item label="Half Day" value="halfday" />
                               <Picker.Item label="Informed Absent" value="in-absent" />

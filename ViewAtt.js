@@ -10,7 +10,8 @@ import {
   View,
   Navigator,
   Touchable,
-  TouchableOpacity
+  TouchableOpacity,
+  ToastAndroid
 } from 'react-native';
 
 class ViewAtt extends Component{
@@ -20,7 +21,9 @@ class ViewAtt extends Component{
         this.state={
             data: [],
             query: '',
-            students: []
+            students: [],
+            summary:[],
+            attendance: []
         }
 
         fetch('https://reportbee-cf27a.firebaseio.com/students.json')
@@ -28,7 +31,8 @@ class ViewAtt extends Component{
                   function(response){
                   response.json().then(function(data) {
                     this.setState({
-                         students: data
+                         students: data,
+                         attendance: data
                     })
                   }.bind(this));
               }.bind(this))
@@ -52,24 +56,60 @@ class ViewAtt extends Component{
         }
     }
 
-    renderSummary(item) {
-        let present, absent, unAbsent, inAbsent;
+    calculateAtt(data) {
+        let present=0, halfday=0, unAbsent=0, inAbsent = 0, total =0;
+        let studAtt = {}
+        for (let i of this.state.attendance) {
+            if(i["id"] == data.id) {
+                    studAtt = i["attendance"];
+                    for (let j in studAtt) {
+                        if( studAtt.hasOwnProperty(j) ) {
+                            console.log(studAtt[j]["att"]);
+                            switch(studAtt[j]["att"]) {
+                                case 'un-absent':
+                                    unAbsent++;
+                                    break;
+                                case 'in-absent':
+                                    inAbsent++;
+                                    break;
+                                case 'present':
+                                    present++;
+                                    break;
 
-        return(
+                                case 'halfday':
+                                    halfday++;
+                                    break;
+                            }
+                        }
+                        total+=1;
+
+                    }
+            }
+
+        }
+
+        this.renderSummary(total, inAbsent, unAbsent, present, halfday, data );
+
+    }
+
+    renderSummary(total, inAb, unAb, present, half, item) {
+
+        this.summary =
+
             <View>
                 <Text>Student name: {item.name}</Text>
-                <Text style={{textAlign: 'left'}}>Total number of working days: </Text>
-                <Text>Number of Present working days: </Text>
-                <Text>Number of Half-present working days: </Text>
-                <Text>Number of Absent working days(Informed): </Text>
-                <Text>Number of Absent working days(Un-informed): </Text>
+                <Text style={{textAlign: 'left'}}>Total number of working days: {total} </Text>
+                <Text>Number of Present working days:{present} </Text>
+                <Text>Number of Half-present working days:{half} </Text>
+                <Text>Number of Absent working days(Informed):{inAb} </Text>
+                <Text>Number of Absent working days(Un-informed):{unAb} </Text>
             </View>
-        )
     }
+
     render(){
         return(
                     <View style={styles.container}>
-                        {this.renderSummary(this.state.query)}
+                        {this.summary}
                         <Autocomplete
                           placeholder = "Enter student name or roll number"
                           data={this.state.data}
@@ -94,6 +134,7 @@ class ViewAtt extends Component{
             query: data,
             data:[]
         })
+        this.calculateAtt(data);
     }
 
 }
